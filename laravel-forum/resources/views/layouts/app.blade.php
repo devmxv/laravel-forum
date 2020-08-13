@@ -16,6 +16,13 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
     <!-- Styles -->
+
+    <style>
+    .btn-info{
+        color:white;
+    }
+
+    </style>
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     @yield('css')
 </head>
@@ -76,7 +83,17 @@
             <main class="container py-4">
                 <div class="row">
                     <div class="col-md-4">
-                        <a href="{{ route('discussions.create') }}" style="width:100%; color:white" class="btn btn-info my-2">Create Discussion</a>
+
+                        @auth
+                            <a href="{{ route('discussions.create') }}" style="width:100%" class="btn btn-info my-2">
+                                Add Discussion
+                            </a>
+                        @else
+                            <a href="{{ route('login') }}" style="width:100%" class="btn btn-info my-2">
+                                Sign In to Add Discussion
+                            </a>
+                        @endauth
+                        </a>
                         <div class="card">
                             <div class="card-header">
                                 Channels

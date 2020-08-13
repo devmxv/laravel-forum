@@ -14,10 +14,61 @@
               </div>
               <hr>
               {!! $discussion->content !!}
-            </>
+            </div>
+
+
+
           </div>
+
+          @foreach ($discussion->replies()->paginate(3) as $reply)
+            <div class="card my-5">
+              <div class="card-header">
+                <div class="d-flex justify-content-between">
+                  <div>
+                    <img width="40px" height="40px" style="border-radius:50%" src="{{ Gravatar::src($reply->owner->email) }}" alt="">
+                    <span>{{ $reply->owner->name }}</span>
+                  </div>
+                </div>
+              </div>
+              <div class="card-body">
+                {!! $reply->content !!}
+              </div>
+            </div>
+          @endforeach
+
+          {{ $discussion->replies()->paginate(3)->links() }}
+          <div class="card my-5">
+              <div class="card-header">
+                Add a Reply
+              </div>
+              <div class="card-body">
+                @auth
+                  <form action="{{ route('replies.store', $discussion->slug) }}" method="POST">
+                    @csrf
+                    <input type="hidden" name="content" id="content">
+                    <trix-editor input="content"></trix-editor>
+
+                    <button type="submit" class="btn btn-sm btn-success my-2">
+                      Add Reply
+                    </button>
+                  </form>
+                @else
+                  <a href="{{ route('login') }}" class="btn btn-info">Sign in to add a reply</a>
+                @endauth
+              </div>
+            </div>
         </div>
       </div>
     </div>
 </div>
+
+
+@endsection
+
+@section('css')
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/trix/1.2.4/trix.css" integrity="sha512-qjOt5KmyILqcOoRJXb9TguLjMgTLZEgROMxPlf1KuScz0ZMovl0Vp8dnn9bD5dy3CcHW5im+z5gZCKgYek9MPA==" crossorigin="anonymous" />
+@endsection
+
+@section('js')
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/trix/1.2.4/trix-core.js" integrity="sha512-Bc0tcenDX+c0B1lvTXLZBU2NraxlJyjfEh23g/0tTibP1cvmO2WRUZBpND9gidRmhm3M3/FCd6t+xgsAMC7L7A==" crossorigin="anonymous"></script>
 @endsection
