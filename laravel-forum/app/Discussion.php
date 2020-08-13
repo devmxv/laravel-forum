@@ -22,7 +22,19 @@ class Discussion extends Model
 
     }
 
+    public function bestReply(){
+        return $this->belongsTo(Reply::class, 'reply_id');
+
+    }
+
     public function replies(){
         return $this->hasMany(Reply::class);
+    }
+
+    //---Updates the reply_id field
+    public function markAsBestReply(Reply $reply){
+        $this->update([
+            'reply_id' => $reply->id
+        ]);
     }
 }

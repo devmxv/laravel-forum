@@ -4,6 +4,7 @@ namespace LaravelForum\Http\Controllers;
 
 use Illuminate\Http\Request;
 use LaravelForum\Discussion;
+use LaravelForum\Reply;
 use LaravelForum\Http\Requests\CreateDiscussionRequest;
 
 class DiscussionsController extends Controller
@@ -111,4 +112,16 @@ class DiscussionsController extends Controller
     {
         //
     }
+
+    //---Mark as best reply funcionality
+    //---discussion = slug
+    //---reply = id
+    public function reply(Discussion $discussion, Reply $reply){
+        $discussion->markAsBestReply($reply);
+
+        session()->flash('success', 'Marked as best reply');
+
+        return redirect()->back();
+    }
+
 }
