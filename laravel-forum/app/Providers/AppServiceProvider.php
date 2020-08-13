@@ -2,7 +2,10 @@
 
 namespace LaravelForum\Providers;
 
+use LaravelForum\Channel;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
+
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -23,6 +26,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        //---Boot anything in the application
+        View::share('channels', Channel::all());
     }
 }
