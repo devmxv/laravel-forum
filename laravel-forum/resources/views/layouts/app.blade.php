@@ -18,7 +18,7 @@
     <!-- Styles -->
 
     <style>
-    .btn-info{
+    .btn-info, .badge-info {
         color:white;
     }
 
@@ -40,7 +40,16 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
-
+                        @auth
+                            <li class="nav-item">
+                                <a href="" class="nav-link">
+                                    <span class="badge badge-info" style="color:white;">
+                                        {{ auth()->user()->unreadNotifications->count() }}
+                                        Unread notifications
+                                    </span>
+                                </a>
+                            </li>
+                        @endauth
                     </ul>
 
                     <!-- Right Side Of Navbar -->
