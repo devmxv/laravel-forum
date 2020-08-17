@@ -2,6 +2,7 @@
 
 namespace LaravelForum;
 
+use LaravelForum\Notifications\VerifyEmail;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -44,5 +45,11 @@ class User extends Authenticatable
 
     public function replies(){
         return $this->hasMany(Reply::class);
+    }
+
+    //---Override core method to send notification message
+
+    public function sendEmailVerificationNotification(){
+        $this->notify(new VerifyEmail());
     }
 }
